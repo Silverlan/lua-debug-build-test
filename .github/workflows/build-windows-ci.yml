@@ -24,7 +24,7 @@ jobs:
             generators: "Visual Studio 16 2022"
             build_dir: 'build'
     steps:
-      - name: Build luamake
+      - name: Build lua-debug
         shell: bash
         run: |
           git clone https://github.com/actboy168/luamake
@@ -34,9 +34,6 @@ jobs:
           ./compile/install.bat
           popd
           
-      - name: Build lua-debug
-        shell: bash
-        run: |
           git clone https://github.com/actboy168/lua-debug
           cd lua-debug
           git submodule init
