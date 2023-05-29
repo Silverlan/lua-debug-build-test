@@ -40,6 +40,11 @@ jobs:
           cd lua-debug
           git submodule init
           git submodule update
+          
+          $curDir = Get-Location
+          $luamakePath = Join-Path $curDir "luamake"
+          $env:Path = $curDir +';' + $env:Path     # attach to the beginning
+          $env:Path                             # shows the actual content
 
           luamake lua compile/download_deps.lua
           luamake -mode release
