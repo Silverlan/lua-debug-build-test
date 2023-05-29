@@ -34,6 +34,9 @@ jobs:
           ./compile/install.bat
           popd
           
+      - name: Build lua-debug2
+        shell: cmd
+        run: |
           git clone https://github.com/actboy168/lua-debug
           cd lua-debug
           git submodule init
