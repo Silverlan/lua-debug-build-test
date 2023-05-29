@@ -43,7 +43,8 @@ jobs:
           
           $curDir = Get-Location
           $luamakePath = Join-Path $curDir "luamake"
-          $env:Path = $curDir +';' + $env:Path     # attach to the beginning
+          $env:PATH += ";"
+          $env:PATH += $luamakePath
           $env:Path                             # shows the actual content
 
           luamake lua compile/download_deps.lua
