@@ -41,11 +41,12 @@ jobs:
           luamake lua compile/download_deps.lua
           luamake -mode release
 
-      - name: Build lua-debug
+      - name: Copy Files
         shell: python
         run: |
           import shutil
           import os
+          import platform
 
           if platform == "linux":
               luadebug_bin_path = "runtime/linux-x64/luajit"
@@ -73,3 +74,9 @@ jobs:
           luadebug_bin_source = os.path.join(luadebug_root, "publish", luadebug_bin_path, luadebug_bin_name)
           luadebug_bin_destination = os.path.join(install_dir, "lua", "modules", "lua-debug", luadebug_bin_path, luadebug_bin_name)
           shutil.copy2(luadebug_bin_source, luadebug_bin_destination)
+
+      - name: Release Binaries
+        uses: Silverlan/common_actions/release_nightly_binaries@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.ref_name }}
