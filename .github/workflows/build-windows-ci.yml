@@ -25,7 +25,7 @@ jobs:
             build_dir: 'build'
     steps:
       - name: Build lua-debug
-        shell: bash
+        shell: cmd
         run: |
           git clone https://github.com/actboy168/luamake
           pushd luamake
