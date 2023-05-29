@@ -40,6 +40,9 @@ jobs:
           git submodule update
           luamake lua compile/download_deps.lua
           luamake -mode release
+          
+          echo "ALL FILES"
+          ls -R
 
       - name: Copy Files
         shell: python
