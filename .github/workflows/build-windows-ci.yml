@@ -24,28 +24,31 @@ jobs:
             generators: "Visual Studio 16 2022"
             build_dir: 'build'
     steps:
-      - name: Build lua-debug
-        shell: cmd
+      - uses: actions/checkout@v3
+        with:
+          submodules : recursive
+      - uses: actboy168/setup-luamake@master
+      - if: matrix.platform == 'linux-arm64'
         run: |
-          git clone https://github.com/actboy168/luamake
-          pushd luamake
-          git submodule init
-          git submodule update
-          ./compile/install.bat
-          popd
-          
-      - name: Build lua-debug2
-        shell: cmd
-        run: |
-          git clone https://github.com/actboy168/lua-debug
-          cd lua-debug
-          git submodule init
-          git submodule update
-          luamake lua compile/download_deps.lua
-          luamake -mode release
-          
-          echo "ALL FILES"
-          ls -R
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+      - run: luamake lua compile/download_deps.lua
+      - run: luamake -mode release -platform ${{ matrix.platform }}
+      - run: npm install -g vsce ovsx
+      - run: npx vsce publish --target ${{ matrix.platform }} -p ${{ secrets.VSCE_KEY }}
+        working-directory: publish
+        continue-on-error: true
+      - run: npx ovsx publish --target ${{ matrix.platform }} -p ${{ secrets.OVSX_KEY }}
+        working-directory: publish
+        continue-on-error: true
+      - if: matrix.platform == 'win32-x64'
+        run: npx vsce publish --target win32-ia32 -p ${{ secrets.VSCE_KEY }}
+        working-directory: publish
+        continue-on-error: true
+      - if: matrix.platform == 'win32-x64'
+        run: npx ovsx publish --target win32-ia32 -p ${{ secrets.OVSX_KEY }}
+        working-directory: publish
+        continue-on-error: true
 
       - name: Copy Files
         shell: python
