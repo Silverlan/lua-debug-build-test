@@ -40,3 +40,36 @@ jobs:
           git submodule update
           luamake lua compile/download_deps.lua
           luamake -mode release
+
+      - name: Build lua-debug
+        shell: python
+        run: |
+          import shutil
+          import os
+
+          if platform == "linux":
+              luadebug_bin_path = "runtime/linux-x64/luajit"
+              luadebug_bin_name = "luadebug.so"
+          else:
+              luadebug_bin_path = "runtime/win32-x64/luajit"
+              luadebug_bin_name = "luadebug.dll"
+
+          # Set luadebug_root = currentDirectory + "/lua-debug"
+          luadebug_root = os.path.join(os.getcwd(), "lua-debug")
+
+          # Set install_dir = currentDirectory + "/release"
+          install_dir = os.path.join(os.getcwd(), "release")
+
+          # Create path install_dir + "/lua/modules/lua-debug/" + luadebug_bin_path
+          luadebug_module_path = os.path.join(install_dir, "lua", "modules", "lua-debug", luadebug_bin_path)
+          os.makedirs(luadebug_module_path, exist_ok=True)
+
+          # Copy contents of luadebug_root + "/publish/script" to install_dir + "/lua/modules/lua-debug/script/"
+          script_source_dir = os.path.join(luadebug_root, "publish", "script")
+          script_destination_dir = os.path.join(install_dir, "lua", "modules", "lua-debug", "script")
+          shutil.copytree(script_source_dir, script_destination_dir)
+
+          # Copy luadebug_root + "/publish/" + luadebug_bin_path + "/" + luadebug_bin_name to install_dir + "/lua/modules/lua-debug/" + luadebug_bin_path + "/"
+          luadebug_bin_source = os.path.join(luadebug_root, "publish", luadebug_bin_path, luadebug_bin_name)
+          luadebug_bin_destination = os.path.join(install_dir, "lua", "modules", "lua-debug", luadebug_bin_path, luadebug_bin_name)
+          shutil.copy2(luadebug_bin_source, luadebug_bin_destination)
