@@ -27,6 +27,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules : recursive
+          repository: 'actboy168/lua-debug'
       - uses: actboy168/setup-luamake@master
       - if: matrix.platform == 'linux-arm64'
         run: |
