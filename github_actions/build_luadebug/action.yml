@@ -42,6 +42,6 @@ runs:
     - name: Install
       shell: bash
       run: |
-        python install_files.py "${{inputs.deps_dir}}" ${{inputs.install_dir}}"
+        python install_files.py "${{inputs.deps_dir}}" "${{inputs.install_dir}}"
   
     - uses: Silverlan/common_actions/action_end@main
