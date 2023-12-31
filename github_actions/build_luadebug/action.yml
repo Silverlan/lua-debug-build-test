@@ -31,24 +31,24 @@ runs:
     - name: Build luamake
       shell: bash
       run: |
-        python build_luamake.py "{{ steps.set-output-vars.outputs.deps-dir }}"
+        python build_luamake.py "${{ steps.set-output-vars.outputs.deps-dir }}"
 
     - name: Build luadebug
       if: runner.os == 'Linux'
       shell: bash
       run: |
-        python build_luadebug.py "{{ steps.set-output-vars.outputs.deps-dir }}"
+        python build_luadebug.py "${{ steps.set-output-vars.outputs.deps-dir }}"
 
     # On Windows we have to run this in powershell
     - name: Build luadebug
       if: runner.os == 'Windows'
       shell: pwsh
       run: |
-        python build_luadebug.py "{{ steps.set-output-vars.outputs.deps-dir }}"
+        python build_luadebug.py "${{ steps.set-output-vars.outputs.deps-dir }}"
 
     - name: Install
       shell: bash
       run: |
-        python install_files.py "{{ steps.set-output-vars.outputs.deps-dir }}" "{{ steps.set-output-vars.outputs.install-dir }}"
+        python install_files.py "${{ steps.set-output-vars.outputs.deps-dir }}" "${{ steps.set-output-vars.outputs.install-dir }}"
   
     - uses: Silverlan/common_actions/action_end@main
