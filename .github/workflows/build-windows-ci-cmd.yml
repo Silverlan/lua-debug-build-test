@@ -36,12 +36,7 @@ jobs:
       - name: Build luamake
         shell: bash
         run: |
-          python build_luamake.py
-          
-      - name: Build lua-debug
-        shell: bash
-        run: |
-          python build_luadebug.py
+          python build.py
           
       - name: Print Files
         shell: bash
