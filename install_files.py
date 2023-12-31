@@ -35,11 +35,14 @@ mkpath(install_dir +"/lua/script/")
 
 # Copy required files
 print("Copying lua-debug files...")
+print("cp_dir " +luadebug_dir +"/publish/script" +"->" +install_dir +"/lua/script/")
 cp_dir(luadebug_dir +"/publish/script",install_dir +"/lua/script/")
 
 # Copy binary to "lua/runtime/" (the module won't be able to find it anywhere else)
+print("cp " +luadebug_dir +"/publish/" +luadebug_bin_path +"/" +luadebug_bin_name +"->" +install_dir +"/lua/" +luadebug_bin_path +"/")
 cp(luadebug_dir +"/publish/" +luadebug_bin_path +"/" +luadebug_bin_name,install_dir +"/lua/" +luadebug_bin_path +"/")
 
 # debugger.lua has to be located under "lua/modules/lua-debug/script/", or the module won't be able to find it.
 # The other script files are located under "lua/script/".
+print("mv " +install_dir +"/lua/script/debugger.lua" +"->" +install_dir +"/lua/modules/lua-debug/script/debugger.lua")
 mv(install_dir +"/lua/script/debugger.lua",install_dir +"/lua/modules/lua-debug/script/debugger.lua")

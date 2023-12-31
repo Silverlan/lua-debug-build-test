@@ -24,24 +24,24 @@ runs:
     - name: Build luamake
       shell: bash
       run: |
-        python build_luamake.py "$(pwd)/deps"
+        python build_luamake.py "${{inputs.deps_dir}}"
 
     - name: Build luadebug
       if: runner.os == 'Linux'
       shell: bash
       run: |
-        python build_luadebug.py "$(pwd)/deps"
+        python build_luadebug.py "${{inputs.deps_dir}}"
 
     # On Windows we have to run this in powershell
     - name: Build luadebug
       if: runner.os == 'Windows'
       shell: pwsh
       run: |
-        python build_luadebug.py "$(pwd)/deps"
+        python build_luadebug.py "${{inputs.deps_dir}}"
 
     - name: Install
       shell: bash
       run: |
-        python install_files.py "$(pwd)/deps" "$(pwd)/install"
+        python install_files.py "${{inputs.deps_dir}}" ${{inputs.install_dir}}"
   
     - uses: Silverlan/common_actions/action_end@main
