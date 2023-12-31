@@ -34,21 +34,11 @@ jobs:
           mkdir deps
           mkdir install
 
-      - name: Build luamake
-        shell: bash
-        run: |
-          python build_luamake.py "$(pwd)/deps"
+      - uses: Silverlan/lua-debug-build-test/github_actions/build_luadebug@main
+        with:
+          deps_dir: 'deps'
+          install_dir: 'install'
 
-      - name: Build luadebug
-        shell: pwsh
-        run: |
-          python build_luadebug.py "$(pwd)/deps"
-
-      - name: Install
-        shell: bash
-        run: |
-          python install_files.py "$(pwd)/deps" "$(pwd)/install"
-          
       - name: Print Files
         shell: bash
         run: |
