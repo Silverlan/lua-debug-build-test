@@ -1,16 +1,13 @@
 import subprocess
 import os
+import sys
 
-# Git clone
+deps_dir = sys.argv[1]
+os.chdir(deps_dir)
+
 subprocess.run(["git", "clone", "https://github.com/actboy168/lua-debug"])
-
-# Change directory to lua-debug
 os.chdir("lua-debug")
-
-# Git submodule init
 subprocess.run(["git", "submodule", "init"])
-
-# Git submodule update
 subprocess.run(["git", "submodule", "update"])
 
 def reset_to_commit(sha):
@@ -19,8 +16,5 @@ def reset_to_commit(sha):
 
 reset_to_commit("693549d")
 
-# Run download_deps.lua using luamake
 subprocess.run(["../luamake/luamake", "lua", "compile/download_deps.lua"])
-
-# Build in release mode using luamake
 subprocess.run(["../luamake/luamake", "-mode", "release"])

@@ -1,17 +1,14 @@
 import subprocess
 import os
+import sys
 from sys import platform
 
-# Git clone
+deps_dir = sys.argv[1]
+os.chdir(deps_dir)
+
 subprocess.run(["git", "clone", "https://github.com/actboy168/luamake"])
-
-# Change directory to luamake
 os.chdir("luamake")
-
-# Git submodule init
 subprocess.run(["git", "submodule", "init"])
-
-# Git submodule update
 subprocess.run(["git", "submodule", "update"])
 
 def reset_to_commit(sha):
@@ -20,11 +17,9 @@ def reset_to_commit(sha):
 
 reset_to_commit("0bf6041")
 
-# Check OS and execute the appropriate installation script
-if platform == "win32":  # Windows
+if platform == "win32":
     subprocess.run([".\compile\install.bat", "msvc"])
-else:  # Other OS (assuming Unix-like)
+else:
     subprocess.run(["./compile/install.sh", "other"])
 
-# Move back to the previous directory
 os.chdir("..")
