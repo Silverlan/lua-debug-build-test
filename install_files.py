@@ -18,15 +18,19 @@ else:
 	luadebug_bin_name = "luadebug.dll"
 
 def mkpath(path):
+	print("mkpath ",path)
 	pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 
 def cp(src,dst):
+	print("cp ",src,dst)
 	shutil.copy2(src,dst)
 
 def mv(src, dst):
+	print("mv ",src, dst)
 	shutil.move(src,dst)
 
 def cp_dir(src,dst):
+	print("cp_dir ",src,dst)
 	shutil.copytree(src,dst,dirs_exist_ok=True)
 
 mkpath(install_dir +"/lua/" +luadebug_bin_path)
@@ -35,14 +39,11 @@ mkpath(install_dir +"/lua/script/")
 
 # Copy required files
 print("Copying lua-debug files...")
-print("cp_dir " +luadebug_dir +"/publish/script" +"->" +install_dir +"/lua/script/")
 cp_dir(luadebug_dir +"/publish/script",install_dir +"/lua/script/")
 
 # Copy binary to "lua/runtime/" (the module won't be able to find it anywhere else)
-print("cp " +luadebug_dir +"/publish/" +luadebug_bin_path +"/" +luadebug_bin_name +"->" +install_dir +"/lua/" +luadebug_bin_path +"/")
 cp(luadebug_dir +"/publish/" +luadebug_bin_path +"/" +luadebug_bin_name,install_dir +"/lua/" +luadebug_bin_path +"/")
 
 # debugger.lua has to be located under "lua/modules/lua-debug/script/", or the module won't be able to find it.
 # The other script files are located under "lua/script/".
-print("mv " +install_dir +"/lua/script/debugger.lua" +"->" +install_dir +"/lua/modules/lua-debug/script/debugger.lua")
 mv(install_dir +"/lua/script/debugger.lua",install_dir +"/lua/modules/lua-debug/script/debugger.lua")
