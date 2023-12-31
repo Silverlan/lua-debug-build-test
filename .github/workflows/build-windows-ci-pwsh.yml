@@ -37,3 +37,8 @@ jobs:
         shell: pwsh
         run: |
           python build_luadebug.py
+          
+      - name: Print Files
+        shell: bash
+        run: |
+          ls -R
