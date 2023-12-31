@@ -27,6 +27,12 @@ jobs:
         with:
           submodules: false
 
+      - name: Prep
+        shell: bash
+        run: |
+          mkdir deps
+          mkdir install
+
       - name: Build luamake
         shell: bash
         run: |
