@@ -1,4 +1,4 @@
-name: Build lua-debug (CMD)
+name: Build lua-debug (Ubuntu)
 on:
   push:
     branches: [ main ]
@@ -13,21 +13,20 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - os: windows-latest
-            name: "Windows x64 MSVC"
-            artifact: "Windows-MSVC.tar.xz"
+          - os: ubuntu-22.04
+            name: "Ubuntu GCC-11"
+            artifact: "ubuntu_gcc.7z"
             build_type: "RelWithDebInfo"
-            environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-            cc: "cl"
-            cxx: "cl"
+            cc: "clang-14"
+            cxx: "clang++-14"
             archiver: "7z a"
-            generators: "Visual Studio 16 2022"
+            generators: "Unix Makefiles"
             build_dir: 'build'
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: false
-          
+
       - name: Build luamake
         shell: bash
         run: |
