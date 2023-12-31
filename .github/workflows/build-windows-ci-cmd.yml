@@ -28,7 +28,12 @@ jobs:
         with:
           submodules: false
           
-      - name: Build lua-debug with cmd
+      - name: Build luamake
         shell: bash
         run: |
-          python build.py
+          python build_luamake.py
+          
+      - name: Build lua-debug
+        shell: bash
+        run: |
+          python build_luadebug.py
